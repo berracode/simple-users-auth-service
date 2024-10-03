@@ -1,10 +1,12 @@
 package com.nisum.test.msuser.dtos;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import java.util.Set;
 import lombok.Data;
+
+import java.util.Set;
 
 /**
  * UserRegisterDto.
@@ -26,5 +28,6 @@ public class UserRegisterRequestDto {
     private String password;
 
     @NotNull
+    @Valid
     private Set<PhoneDto> phones;
 }

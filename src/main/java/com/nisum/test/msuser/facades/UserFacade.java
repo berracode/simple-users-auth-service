@@ -2,16 +2,17 @@ package com.nisum.test.msuser.facades;
 
 import com.nisum.test.msuser.dtos.UserDto;
 import com.nisum.test.msuser.dtos.UserRegisterRequestDto;
-import com.nisum.test.msuser.dtos.UserRegisterResponseDto;
+import com.nisum.test.msuser.entities.Phone;
 import com.nisum.test.msuser.mapper.UserMapper;
+import com.nisum.test.msuser.services.PhoneService;
 import com.nisum.test.msuser.services.UserService;
 import jakarta.transaction.Transactional;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * UserFacade.
@@ -24,8 +25,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserFacade {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserFacade.class);
     private final UserService userService;
+    private final PhoneService phoneService;
+
     private final UserMapper userMapper;
 
 
@@ -34,12 +36,24 @@ public class UserFacade {
         userService.verifyUserExistence(userRegisterRequestDto.getEmail());
 
         var userDto =
-            UserDto.builder().name(userRegisterRequestDto.getName()).email(userRegisterRequestDto.getEmail()).password(
-                new BCryptPasswordEncoder().encode(userRegisterRequestDto.getPassword())).isActive(Boolean.TRUE).build();
+                UserDto.builder().name(userRegisterRequestDto.getName()).email(userRegisterRequestDto.getEmail()).password(
+                        new BCryptPasswordEncoder().encode(userRegisterRequestDto.getPassword())).isActive(Boolean.TRUE).build();
 
         var userCreated = userMapper.toDto(userService.save(userMapper.toEntity(userDto)));
 
-        return  userCreated;
+        if (Objects.nonNull(userRegisterRequestDto.getPhones())) {
+            var phones = userRegisterRequestDto.getPhones();
+            var phoneWithUser = phones.stream().map(phoneDto -> Phone.builder()
+                    .number(phoneDto.getNumber())
+                    .cityCode(phoneDto.getCityCode())
+                    .countryCode(phoneDto.getCountryCode())
+                    .userId(userCreated.getId())
+                    .build()
+            ).collect(Collectors.toSet());
+            phoneService.saveAll(phoneWithUser);
+        }
+
+        return userCreated;
     }
 
 }

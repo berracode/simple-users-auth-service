@@ -5,6 +5,8 @@ import com.nisum.test.msuser.utils.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import static com.nisum.test.msuser.constants.Constants.CONSTRAINTS_ERROR;
+import static com.nisum.test.msuser.constants.Constants.DATA_INTEGRITY_ERROR;
 
 @ControllerAdvice
 public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -46,5 +51,24 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
         return new ResponseEntity<>(response,
             HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public final ResponseEntity<ApiResponse<String>> handleConstraintViolationException(Exception ex) {
+        logger.error(ex.toString());
+        return new ResponseEntity<>(
+                new ApiResponse(CONSTRAINTS_ERROR, ex.getMessage()),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataConstraintViolationException.class)
+    public final ResponseEntity<ApiResponse<String>> handleDataIntegrityViolation(HttpServletRequest request,
+                                                                                  DataConstraintViolationException ex){
+        logger.error(request.getRequestURL().toString(), ex);
+        return new ResponseEntity<>(new ApiResponse<>(
+                DATA_INTEGRITY_ERROR,
+                ex.getMessage()),
+                HttpStatus.BAD_REQUEST);
+    }
+
 
 }
