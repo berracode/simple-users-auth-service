@@ -1,0 +1,35 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/db/h2
+    #url: jdbc:h2:mydb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: sa
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings.trace: false
+      settings.web-allow-others: false
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+logging:
+  level:
+    root: info
+    org.springframework: info
+
+custom:
+  re-email: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+  re-pass: (?=.*[A-Za-z])(?=.*\d)^[\w\d]+$
+  jwt:
+    secret:
+      key: b08c3d528d8a0fd6d013cf9b8af36e4680cdd3a13a6d70c4b7b25a792d1ec476
+    expire:
+      time: 1800000
+
+
