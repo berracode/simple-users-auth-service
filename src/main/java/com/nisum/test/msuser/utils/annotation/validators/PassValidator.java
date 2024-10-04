@@ -12,7 +12,6 @@ public class PassValidator implements ConstraintValidator<ValidPass, String> {
 
     @Override
     public void initialize(ValidPass constraintAnnotation) {
-        // Inicializa el validador, si es necesario
     }
 
     @Override

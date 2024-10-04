@@ -16,7 +16,7 @@ spring:
       settings.web-allow-others: false
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create #genera las tablas
 
 logging:
   level:
