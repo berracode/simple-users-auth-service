@@ -3,7 +3,6 @@ package com.nisum.test.msuser.controllers;
 import com.nisum.test.msuser.dtos.UserDto;
 import com.nisum.test.msuser.dtos.UserRegisterRequestDto;
 import com.nisum.test.msuser.facades.UserFacade;
-import com.nisum.test.msuser.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

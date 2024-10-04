@@ -1,9 +1,9 @@
 package com.nisum.test.msuser.dtos;
 
+import com.nisum.test.msuser.utils.annotation.ValidEmail;
+import com.nisum.test.msuser.utils.annotation.ValidPass;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.util.Set;
@@ -20,11 +20,11 @@ public class UserRegisterRequestDto {
     private String name;
 
     @NotNull
-    @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
+    @ValidEmail
     private String email;
 
     @NotNull
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w\\d])[A-Za-z\\d\\W]{8,}$")
+    @ValidPass
     private String password;
 
     @NotNull

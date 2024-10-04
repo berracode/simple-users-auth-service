@@ -40,6 +40,7 @@ public class GlobalResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
     @Override protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex,
         final HttpHeaders headers, final HttpStatusCode status, final WebRequest request) {
+        logger.error(ex.toString());
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();

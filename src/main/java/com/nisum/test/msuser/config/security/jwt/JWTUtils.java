@@ -19,12 +19,12 @@ public class JWTUtils {
     private static String JWT_SECRET;
     private static String JWT_EXPIRATION_TIME;
 
-    @Value("${custom.jwt.secret.key}")
+    @Value("${jwt.secret.key}")
     public void setJwtSecret(String jwtSecret) {
         JWT_SECRET = jwtSecret;
     }
 
-    @Value("${custom.jwt.expire.time}")
+    @Value("${jwt.expire.time}")
     public void setJwtExpirationTime(String jwtExpirationTime) {
         JWT_EXPIRATION_TIME = jwtExpirationTime;
     }

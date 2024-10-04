@@ -1,6 +1,6 @@
 package com.nisum.test.msuser.dtos;
 
-import jakarta.validation.constraints.Email;
+import com.nisum.test.msuser.utils.annotation.ValidEmail;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class UserLoginDto {
     @NotNull
-    @Email
+    @ValidEmail
     private String email;
 
     @NotNull

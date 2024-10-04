@@ -23,13 +23,14 @@ logging:
     root: info
     org.springframework: info
 
-custom:
+user-props:
   re-email: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
-  re-pass: (?=.*[A-Za-z])(?=.*\d)^[\w\d]+$
-  jwt:
-    secret:
-      key: b08c3d528d8a0fd6d013cf9b8af36e4680cdd3a13a6d70c4b7b25a792d1ec476
-    expire:
-      time: 1800000
+  re-pass: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d])[A-Za-z\d\W]{8,}$
+
+jwt:
+  secret:
+    key: f47a89e5289d7c3b62af0e46d49bf4c95c4a4fda78b16d9e93f21b0c3da4f17d
+  expire:
+    time: 600000
 
 

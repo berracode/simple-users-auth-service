@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -27,9 +29,7 @@ public class UserFacade {
 
     private final UserService userService;
     private final PhoneService phoneService;
-
     private final UserMapper userMapper;
-
 
     public UserDto registerUser(final UserRegisterRequestDto userRegisterRequestDto) {
 
@@ -55,5 +55,4 @@ public class UserFacade {
 
         return userCreated;
     }
-
 }
